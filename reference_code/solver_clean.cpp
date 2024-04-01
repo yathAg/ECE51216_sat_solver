@@ -190,25 +190,25 @@ int Solver::transform(Formula &f, int literal_to_apply)
 
 int Solver::dpll(Formula f)
 {
-  cout << endl << "new iteration" << endl;
-  cout << "Literals: ";
-  for (int i = 0; i < f.literals.size(); ++i)
-  {
-    cout << f.literals[i] << " ";
-  }
-  cout << endl;
-  cout << "Literal Num: ";
-  for (int i = 0; i < f.literal_num.size(); ++i)
-  {
-    cout << f.literal_num[i] << " ";
-  }
-  cout << endl;
-  cout << "Literal Sign: ";
-  for (int i = 0; i < f.literal_sign.size(); ++i)
-  {
-    cout << f.literal_sign[i] << " ";
-  }
-  cout << endl;
+  // cout << endl << "new iteration" << endl;
+  // cout << "Literals: ";
+  // for (int i = 0; i < f.literals.size(); ++i)
+  // {
+  //   cout << f.literals[i] << " ";
+  // }
+  // cout << endl;
+  // cout << "Literal Num: ";
+  // for (int i = 0; i < f.literal_num.size(); ++i)
+  // {
+  //   cout << f.literal_num[i] << " ";
+  // }
+  // cout << endl;
+  // cout << "Literal Sign: ";
+  // for (int i = 0; i < f.literal_sign.size(); ++i)
+  // {
+  //   cout << f.literal_sign[i] << " ";
+  // }
+  // cout << endl;
 
   int result = BPC(f); // first handle all unit clauses
   if (result == State::sat)
@@ -261,22 +261,22 @@ void Solver::show_result(Formula &f, int result)
   if (result == State::sat)
   {
     cout << "SAT" << endl;
-    for (int i = 0; i < f.literals.size(); i++)
-    {
-      if (i != 0)
-      {
-        cout << " ";
-      }
-      if (f.literals[i] != -1)
-      {
-        cout << pow(-1, f.literals[i]) * (i + 1);
-      }
-      else
-      {
-        cout << (i + 1);
-      }
-    }
-    cout << " 0";
+    // for (int i = 0; i < f.literals.size(); i++)
+    // {
+    //   if (i != 0)
+    //   {
+    //     cout << " ";
+    //   }
+    //   if (f.literals[i] != -1)
+    //   {
+    //     cout << pow(-1, f.literals[i]) * (i + 1);
+    //   }
+    //   else
+    //   {
+    //     cout << (i + 1);
+    //   }
+    // }
+    // cout << " 0";
   }
   else
   {

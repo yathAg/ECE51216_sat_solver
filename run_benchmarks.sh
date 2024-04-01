@@ -16,5 +16,7 @@ rm -f "$OUTPUT_FILE"
 find "$BENCHMARKS_FOLDER" -type f -name "*.cnf" | while read -r file; do
     # Run the solver with the current .cnf file and append the result to the output file
     echo "Running solver for $file..."
-    $SOLVER "$file" >> "$OUTPUT_FILE"
+    echo "Results for $file:" >> "$OUTPUT_FILE"
+    $SOLVER < "$file" >> "$OUTPUT_FILE"
+    echo "" >> "$OUTPUT_FILE"  # Add an empty line after each result
 done
