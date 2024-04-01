@@ -113,7 +113,7 @@ int Solver::BPC(Formula &f)
 {
   bool unit_clause = false;
 
-  // If there are no clauses it is satisfiable by default
+  // If there are no clauses it is satisfiable by default 
   if (f.clause.size() == 0)
   {
     return State::sat;
@@ -125,35 +125,37 @@ int Solver::BPC(Formula &f)
     unit_clause = false;
     for (int i = 0; i < f.clause.size(); i++)
     {
-      if (f.clause[i].size() == 1) // Size of Unit clause will be 1
+      if (f.clause[i].size() == 1)   // Size of Unit clause will be 1
       {
-        unit_clause = true;
-        if (f.clause[i][0] > 0) // if literal is Pos
+        unit_clause = false;
+        int result;
+        if (f.clause[i][0] > 0)     // if literal is positive
         {
-          f.literals[(f.clause[i][0]) - 1] = 0;
+          f.literals[(f.clause[i][0]) - 1] = 1;
           f.literal_num[f.clause[i][0] - 1] = -1;
         }
-        else if (f.clause[i][0] < 0)// if literal is Neg
+        else                       // if literal is negative 
         {
-          f.literals[-1 * (f.clause[i][0]) - 1] = 1;
+          f.literals[-1 * (f.clause[i][0]) - 1] = 0;
           f.literal_num[-1 * f.clause[i][0] - 1] = -1;
         }
-
-        int result = transform(f, f.clause[i][0]); // remove literal from all clauses
+        
+        result = transform(f, f.clause[i][0]);  // remove literal from all clauses 
+        
         if (result == State::sat || result == State::unsat)
         {
           return result;
         }
         break;
       }
-      else if (f.clause[i].size() == 0) // if there is an empty clause it is unsatisfiable
+      else if (f.clause[i].size() == 0)   // if there is an empty clause it is unsatisfiable  
       {
         return State::unsat;
       }
     }
   } while (unit_clause);
 
-  return State::unresolved; // function is not only comprised of unit clauses have to do more
+  return State::unresolved;   // function is not only comprised of unit clauses have to do more 
 }
 
 int Solver::transform(Formula &f, int literal)
@@ -162,19 +164,19 @@ int Solver::transform(Formula &f, int literal)
   {
     for (int j = 0; j < f.clause[i].size(); j++)
     {
-      if (literal == (f.clause[i][j])) // if the literal in some arbitrary clause we are checking is same as the literal
+      if ((f.clause[i][j] == literal))    // if the literal in some arbitrary clause we are checking is same as the literal  
       {
         f.clause.erase(f.clause.begin() + i); // remove the clause ( or operation)
         i--;
-        if (f.clause.size() == 0) // if number of clauses becomes it is satisfied
+        if (f.clause.size() == 0)  // if number of clauses becomes it is satisfied
         {
           return State::sat;
         }
         break;
       }
-      else if (f.clause[i][j] == (-1 * literal)) // if literal is present in complement form
+      else if (-1 * f.clause[i][j] == literal)  // if literal is present in complement form 
       {
-        f.clause[i].erase(f.clause[i].begin() + j); // only remove the literal as is not going to help is satisfiability
+        f.clause[i].erase(f.clause[i].begin() + j); // only remove the literal as is not going to help is satisfiability 
         j--;
         if (f.clause[i].size() == 0)
         {
@@ -189,19 +191,88 @@ int Solver::transform(Formula &f, int literal)
 
 int Solver::dpll(Formula f)
 {
-  cout << endl << "new iteration" << endl;
+    int result = BPC(f);  // first handle all unit clauses 
+    if (result == State::sat)
+    {
+        show_result(f, result);
+        return State::done;
+    }
+    else if (result == State::unsat)  // we are not sure it is satisfied, mark unresolved
+    {
+        return State::unresolved;
+    }
+    int i = distance(               // get position of literal with max position 
+        f.literal_num.begin(),
+        max_element(f.literal_num.begin(), f.literal_num.end()));
+    
+    // cout << "maximum distance is " << i << endl;
+    for (int j = 0; j < 2; j++)
+    {
+        int literal;
+        Formula new_f = f;
+        if (new_f.literal_sign[i] > 0)
+        {
+            new_f.literals[i] = 1;
+            literal = (i+1);
+        }
+        else
+        {
+            new_f.literals[i] = 0;
+            literal = (i+1)*-1;
+
+        }
+        new_f.literal_num[i] = -1;
+        int transform_result = transform(new_f, literal);
+        if (transform_result == State::sat)
+        {
+            show_result(new_f, transform_result);
+            return State::done;
+        }
+        else if (transform_result == State::unsat)
+        {
+            continue;
+        }
+        int dpll_result = dpll(new_f);
+        if (dpll_result == State::done)
+        {
+            return dpll_result;
+        }
+    }
+    return State::unresolved;
+}
+
+void Solver::show_result(Formula &f, int result)
+{
+  cout << "Result: ";
+  switch (result)
+  {
+  case State::sat:
+    cout << "SATISFIABLE" << endl;
+    break;
+  case State::unsat:
+    cout << "UNSATISFIABLE" << endl;
+    break;
+  case State::unresolved:
+    cout << "UNRESOLVED" << endl;
+    break;
+  default:
+    break;
+  }
+
   cout << "Literals: ";
   for (int i = 0; i < f.literals.size(); ++i)
   {
     cout << f.literals[i] << " ";
   }
   cout << endl;
+
   cout << "Literal Num: ";
   for (int i = 0; i < f.literal_num.size(); ++i)
   {
     cout << f.literal_num[i] << " ";
   }
   cout << endl;
+
   cout << "Literal Sign: ";
   for (int i = 0; i < f.literal_sign.size(); ++i)
   {
@@ -209,90 +280,40 @@ int Solver::dpll(Formula f)
   }
   cout << endl;
 
-  int result = BPC(f); // first handle all unit clauses
-  if (result == State::sat)
+  cout << "Clause: ";
+  for (int i = 0; i < f.clause.size(); ++i)
   {
-    show_result(f, result);
-    return State::done;
+    cout << "[ ";
+    for (int j = 0; j < f.clause[i].size(); ++j)
+    {
+      cout << f.clause[i][j] << " ";
+    }
+    cout << "] ";
   }
-  else if (result == State::unsat) // we are not sure it is satisfied, mark unresolved
-  {
-    return State::unresolved;
-  }
-  int i = distance( // get position of literal with max position
-      f.literal_num.begin(),
-      max_element(f.literal_num.begin(), f.literal_num.end()));
+  cout << endl;
 
-  // cout << "maximum distance is " << i << endl;
-  for (int j = 0; j < 2; j++)
+  cout << "result: ";
+  for (int i = 0; i < f.literals.size(); ++i)
   {
-    int literal;
-    Formula new_f = f;
-    if (new_f.literal_sign[i] > 0)
-    {
-      new_f.literals[i] = j;
-      literal = (i + 1);
+    if (f.literals[i] == 0){
+      cout << (-1*(i+1)) << " ";
     }
-    else
-    {
-      new_f.literals[i] = (j + 1) % 2;
-      literal = -1 * (i + 1);
-    }
-    new_f.literal_num[i] = -1;
-    int transform_result = transform(new_f, literal);
-    if (transform_result == State::sat)
-    {
-      show_result(new_f, transform_result);
-      return State::done;
-    }
-    else if (transform_result == State::unsat)
-    {
-      continue;
-    }
-    int dpll_result = dpll(new_f);
-    if (dpll_result == State::done)
-    {
-      return dpll_result;
+    else if (f.literals[i] == 1){
+      cout << ((i+1)) << " ";
     }
   }
-  return State::unresolved;
-}
+  cout << endl;
 
-void Solver::show_result(Formula &f, int result)
-{
-  if (result == State::sat)
-  {
-    cout << "SAT" << endl;
-    for (int i = 0; i < f.literals.size(); i++)
-    {
-      if (i != 0)
-      {
-        cout << " ";
-      }
-      if (f.literals[i] != -1)
-      {
-        cout << pow(-1, f.literals[i]) * (i + 1);
-      }
-      else
-      {
-        cout << (i + 1);
-      }
-    }
-    cout << " 0";
-  }
-  else
-  {
-    cout << "UNSAT";
-  }
+
 }
 
 void Solver::solve()
 {
   int result = dpll(formula);
   if (result == State::unresolved)
-  {
-    show_result(formula, State::unsat);
-  }
+    {
+        show_result(formula, State::unsat);
+    }
 }
 
 int main()

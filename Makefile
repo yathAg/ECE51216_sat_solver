@@ -1,7 +1,7 @@
 CC = g++
 FLAGS = --std=c++11
 file_name = sat_solver
-INPUT_FILE = 02.cnf
+INPUT_FILE = 01.cnf
 
 all: build run
 
