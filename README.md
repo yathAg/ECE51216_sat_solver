@@ -8,3 +8,4 @@
 | `make run`   | Executes the code.                 |
 | `make clean` | Removes the executable.            |
 | `make`       | Builds and runs the code.          |
+
