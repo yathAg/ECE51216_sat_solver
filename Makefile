@@ -10,10 +10,10 @@ build: $(file_name)
 $(file_name): $(file_name).cpp
 	$(CC) $(FLAGS) $< -o $@
 
-run:
+run: build
 	./$(file_name) < $(INPUT_FILE)
 
-run_multiple:
+run_multiple: build
 	./run_benchmarks.sh
 
 clean:
