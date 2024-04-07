@@ -91,13 +91,13 @@ void Solver::initialize()
 
       if (literal > 0)
       {
-        formula.clause[i].push_back(2 * (literal - 1)); //even
+        formula.clause[i].push_back(literal);
         formula.literal_num[literal - 1]++;
         formula.literal_sign[literal - 1]++;
       }
       else if (literal < 0)
       {
-        formula.clause[i].push_back(2 * ((-1) * literal - 1) + 1); //odd
+        formula.clause[i].push_back(literal);
         formula.literal_num[-1 - literal]++;
         formula.literal_sign[-1 - literal]--;
       }
@@ -128,18 +128,18 @@ int Solver::BPC(Formula &f)
       if (f.clause[i].size() == 1) // Size of Unit clause will be 1
       {
         unit_clause = true;
-        if (!(f.clause[i][0] % 2) ) // if literal is Pos
+        if (f.clause[i][0] > 0) // if literal is Pos
         {
-          f.literals[(f.clause[i][0]) / 2] = 0;
-          f.literal_num[f.clause[i][0] / 2] = -1;
+          f.literals[(f.clause[i][0]) - 1] = 0;
+          f.literal_num[f.clause[i][0] - 1] = -1;
         }
-        else if ((f.clause[i][0] % 2))// if literal is Neg
+        else if (f.clause[i][0] < 0)// if literal is Neg
         {
-          f.literals[(f.clause[i][0]) / 2] = 1;
-          f.literal_num[f.clause[i][0] / 2] = -1;
+          f.literals[-1 * (f.clause[i][0]) - 1] = 1;
+          f.literal_num[-1 * f.clause[i][0] - 1] = -1;
         }
 
-        int result = transform(f, f.clause[i][0] / 2);
+        int result = transform(f, f.clause[i][0]); // remove literal from all clauses
         if (result == State::sat || result == State::unsat)
         {
           return result;
@@ -156,14 +156,13 @@ int Solver::BPC(Formula &f)
   return State::unresolved; // function is not only comprised of unit clauses have to do more
 }
 
-int Solver::transform(Formula &f, int literal_to_apply)
+int Solver::transform(Formula &f, int literal)
 {
-  int value_to_apply = f.literals[literal_to_apply];
   for (int i = 0; i < f.clause.size(); i++)
   {
     for (int j = 0; j < f.clause[i].size(); j++)
     {
-      if ((2 * literal_to_apply + value_to_apply) == f.clause[i][j])
+      if (literal == (f.clause[i][j])) // if the literal in some arbitrary clause we are checking is same as the literal
       {
         f.clause.erase(f.clause.begin() + i); // remove the clause ( or operation)
         i--;
@@ -173,7 +172,7 @@ int Solver::transform(Formula &f, int literal_to_apply)
         }
         break;
       }
-      else if (f.clause[i][j] / 2 == literal_to_apply)
+      else if (f.clause[i][j] == (-1 * literal)) // if literal is present in complement form
       {
         f.clause[i].erase(f.clause[i].begin() + j); // only remove the literal as is not going to help is satisfiability
         j--;
@@ -190,25 +189,25 @@ int Solver::transform(Formula &f, int literal_to_apply)
 
 int Solver::dpll(Formula f)
 {
-  // cout << endl << "new iteration" << endl;
-  // cout << "Literals: ";
-  // for (int i = 0; i < f.literals.size(); ++i)
-  // {
-  //   cout << f.literals[i] << " ";
-  // }
-  // cout << endl;
-  // cout << "Literal Num: ";
-  // for (int i = 0; i < f.literal_num.size(); ++i)
-  // {
-  //   cout << f.literal_num[i] << " ";
-  // }
-  // cout << endl;
-  // cout << "Literal Sign: ";
-  // for (int i = 0; i < f.literal_sign.size(); ++i)
-  // {
-  //   cout << f.literal_sign[i] << " ";
-  // }
-  // cout << endl;
+  cout << endl << "new iteration" << endl;
+  cout << "Literals: ";
+  for (int i = 0; i < f.literals.size(); ++i)
+  {
+    cout << f.literals[i] << " ";
+  }
+  cout << endl;
+  cout << "Literal Num: ";
+  for (int i = 0; i < f.literal_num.size(); ++i)
+  {
+    cout << f.literal_num[i] << " ";
+  }
+  cout << endl;
+  cout << "Literal Sign: ";
+  for (int i = 0; i < f.literal_sign.size(); ++i)
+  {
+    cout << f.literal_sign[i] << " ";
+  }
+  cout << endl;
 
   int result = BPC(f); // first handle all unit clauses
   if (result == State::sat)
@@ -227,17 +226,20 @@ int Solver::dpll(Formula f)
   // cout << "maximum distance is " << i << endl;
   for (int j = 0; j < 2; j++)
   {
+    int literal;
     Formula new_f = f;
     if (new_f.literal_sign[i] > 0)
     {
       new_f.literals[i] = j;
+      literal = (i + 1);
     }
     else
     {
       new_f.literals[i] = (j + 1) % 2;
+      literal = -1 * (i + 1);
     }
     new_f.literal_num[i] = -1;
-    int transform_result = transform(new_f, i);
+    int transform_result = transform(new_f, literal);
     if (transform_result == State::sat)
     {
       show_result(new_f, transform_result);
@@ -261,22 +263,22 @@ void Solver::show_result(Formula &f, int result)
   if (result == State::sat)
   {
     cout << "SAT" << endl;
-    // for (int i = 0; i < f.literals.size(); i++)
-    // {
-    //   if (i != 0)
-    //   {
-    //     cout << " ";
-    //   }
-    //   if (f.literals[i] != -1)
-    //   {
-    //     cout << pow(-1, f.literals[i]) * (i + 1);
-    //   }
-    //   else
-    //   {
-    //     cout << (i + 1);
-    //   }
-    // }
-    // cout << " 0";
+    for (int i = 0; i < f.literals.size(); i++)
+    {
+      if (i != 0)
+      {
+        cout << " ";
+      }
+      if (f.literals[i] != -1)
+      {
+        cout << pow(-1, f.literals[i]) * (i + 1);
+      }
+      else
+      {
+        cout << (i + 1);
+      }
+    }
+    cout << " 0";
   }
   else
   {
