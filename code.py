@@ -57,17 +57,20 @@ def VSIDS_init(clauses,num_var):
             counter[literal] += 1
     return counter
 
+
 # conflict : Incerements counter of literalts in conflict clause to increase there chances of getting selected
 def VSIDS_conflict(counter,conflictClause):
     for literal in conflictClause:
         counter[literal]+=1
     return counter
 
+
 # decay : Counter is reduced by 5% for all literals at each conflict
 def VSIDS_decay(counter,num_var):
     for i in range(-num_var,num_var+1):
         counter[i]=counter[i]*95/100
     return counter
+
 
 # decide : Picks a Variable NOT yet in M based on max counter value
 def VSIDS_decide(counter,M,num_var):
@@ -92,7 +95,6 @@ def bcp(clauses, literal):                    #Boolean Constant Propagation on L
             if not x:                         #if this makes a clause Empty , UNSAT
                 return -1
     return new_claus_set
-
 
 
 def unit_propagation(clauses):               # Propogate Unit Clauses and add implications to M
@@ -158,8 +160,6 @@ def CDCL_solve(clauses,num_var):
 
     return M,Restart_count,Learned_count,Decide_count,Imp_count
     
-
-
 
 def create_watchList(clauses,M,num_var):          # Create the 2-literal watch data structure
     literal_watch = {}                    # Will contain the main Literal-> Clause number mapping
@@ -339,12 +339,12 @@ def MAIN():
     # else:
     #     print("Please resolve the errors")
     #     return
-    
     # print (" Solving ...")
+
     startSolve = time.process_time()
     solution = CDCL_solve(clauses,num_var)                            # Solve CNF by CDCL
     EndSolve = time.process_time()
-    print("RESULT: ", end='')
+
     # print()
     # print("Statistics :")
     # print("=============================================")
@@ -355,6 +355,7 @@ def MAIN():
     # print("# Solve time : "+str(EndSolve-startSolve)+" sec")             # Print results
     # print("=============================================")
     
+    print("RESULT: ", end='')
     if solution[0] != -1:
         print("SAT")
         print("ASSIGNMENT:")
