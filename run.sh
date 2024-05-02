@@ -7,5 +7,18 @@ for file in _benchmarks/*.cnf; do
     filename_no_ext="${filename%.*}"
 
     # Run the python3 code with the current .cnf file and pipe the output to format_checker
-    python3 code.py "$file" > "_results/${filename_no_ext}_output.txt"
+    if timeout 10m python3 SatSolver.py "$file" > "_results5/${filename_no_ext}_output.txt"; then
+        # Print message indicating the completion of evaluation for the current file
+        echo "Done evaluating $filename"
+    else
+        # Print message indicating the skipping of the file due to timeout
+        echo "Skipping $filename due to timeout"
+        # Add specific result message to the output file
+        echo "RESULT: Skipped file" > "_results5/${filename_no_ext}_output.txt"
+        continue  # Skip to the next file
+    fi
+
+    # Delay for 5 seconds
+    sleep 5
+
 done
