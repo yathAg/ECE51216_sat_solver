@@ -68,7 +68,7 @@ def VSIDS_conflict(counter,conflictClause):
 # decay : Counter is reduced by 5% for all literals at each conflict
 def VSIDS_decay(counter,num_var):
     for i in range(-num_var,num_var+1):
-        counter[i]=counter[i]*95/100
+        counter[i]=counter[i]*100/100
     return counter
 
 
