@@ -288,10 +288,10 @@ def MAIN():
     stop = time.process_time()
     
     # Print read time and status
-    if a == 1:
-        print("Successfully read the file")
-        print("Vars : " + str(numLiteral) + " Clauses : " + str(numClause))
-        print("Read time: " + str(stop - start) + " sec")
+    # if a == 1:
+    #     print("Successfully read the file")
+    #     print("Vars : " + str(numLiteral) + " Clauses : " + str(numClause))
+    #     print("Read time: " + str(stop - start) + " sec")
 
     # Solve CNF by CDCL
     start = time.process_time()
@@ -299,15 +299,15 @@ def MAIN():
     stop = time.process_time()
 
     # Print statistics
-    print()
-    print("Statistics:")
-    print("=============================================")
-    print("# Restarts: " + str(sol[1]))
-    print("# Learned Clauses: " + str(sol[2]))
-    print("# Decisions: " + str(sol[3]))
-    print("# Implications: " + str(sol[4]))
-    print("# Solve time: " + str(stop - start) + " sec")
-    print("=============================================")
+    # print()
+    # print("Statistics:")
+    # print("=============================================")
+    # print("# Restarts: " + str(sol[1]))
+    # print("# Learned Clauses: " + str(sol[2]))
+    # print("# Decisions: " + str(sol[3]))
+    # print("# Implications: " + str(sol[4]))
+    # print("# Solve time: " + str(stop - start) + " sec")
+    # print("=============================================")
     
     # Print result
     print("RESULT: ", end='')
