@@ -126,7 +126,6 @@ def CDCL_solve(clauses,num_var):
     
     # Initialize TWO LITERAL WATCH data Structure :
     literal_watch,clauses_literal_watched = create_watchList(clauses,M,num_var)
-
     probability=0.9                                             # Random Restart Probability ,  Decays with restarts
     Restart_count = Learned_count = Decide_count = Imp_count = 0
     

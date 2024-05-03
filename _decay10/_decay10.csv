@@ -5,7 +5,7 @@ Vars,Clauses,Solve time,Restarts,Learned Clauses,Decisions,Implications,Result,F
 50,218,0.008243497999999998,5,35,47,795,SAT,uf50-01_output.txt
 100,430,0.313675443,8,834,846,36674,SAT,uf100-02_output.txt
 ,,,,,,,Skipped file,aim-200-2_0-yes1-2_output.txt
-150,645,4435.974541429,11,34565,34564,1956657,UNSAT,uuf150-01_output.txt
+,,,,,,,Skipped file,uuf150-01_output.txt
 50,218,0.00626204,3,21,42,501,SAT,uf50-03_output.txt
 ,,,,,,,Skipped file,uuf175-02_output.txt
 125,538,42.750034445000004,11,6488,6487,311505,UNSAT,uuf125-03_output.txt
@@ -17,8 +17,7 @@ Vars,Clauses,Solve time,Restarts,Learned Clauses,Decisions,Implications,Result,F
 175,753,26.048876323,11,38953,38980,2493135,SAT,uf175-01_output.txt
 50,100,0.029607797,7,311,317,4715,SAT,aim-50-2_0-yes1-1_output.txt
 50,100,0.195529261,9,1231,1230,18831,UNSAT,aim-50-2_0-no-2_output.txt
-,,,,,,,Skipped file,uuf150-02_output.txt
-200,400,203.96518702699998,11,21363,21379,689800,SAT,aim-200-2_0-yes1-3_output.txt
+200,400,196.169844252,11,21363,21379,689800,SAT,aim-200-2_0-yes1-3_output.txt
 50,218,0.012498999,6,57,56,1398,UNSAT,uuf50-02_output.txt
 100,200,0.120165529,11,1174,1173,17595,UNSAT,aim-100-2_0-no-1_output.txt
 ,,,,,,,Skipped file,aim-200-2_0-no-2_output.txt
@@ -43,7 +42,7 @@ Vars,Clauses,Solve time,Restarts,Learned Clauses,Decisions,Implications,Result,F
 75,325,0.0052602659999999996,4,12,36,468,SAT,uf75-01_output.txt
 150,645,5.588869937,11,9733,9760,547603,SAT,uf150-01_output.txt
 75,325,0.012826262000000001,4,42,52,1246,SAT,uf75-03_output.txt
-200,400,67.797364209,11,341382,341410,22260211,SAT,aim-200-2_0-yes1-1_output.txt
+200,400,67.666833513,11,341382,341410,22260211,SAT,aim-200-2_0-yes1-1_output.txt
 50,218,0.016748087,5,72,71,1822,UNSAT,uuf50-01_output.txt
 125,538,303.673590643,11,12489,12488,610748,UNSAT,uuf125-02_output.txt
 100,430,0.602308505,9,1051,1050,39202,UNSAT,uuf100-01_output.txt
@@ -51,5 +50,5 @@ Vars,Clauses,Solve time,Restarts,Learned Clauses,Decisions,Implications,Result,F
 175,753,0.62529676,9,819,845,54583,SAT,uf175-03_output.txt
 ,,,,,,,Skipped file,uuf150-03_output.txt
 75,325,0.002543618000000001,1,1,21,41,SAT,uf75-02_output.txt
-200,400,8.603514001,11,11587,11586,202983,UNSAT,aim-200-2_0-no-3_output.txt
+200,400,9.085777162000001,11,11587,11586,202983,UNSAT,aim-200-2_0-no-3_output.txt
 100,430,5.855266781,11,2902,2901,115984,UNSAT,uuf100-03_output.txt
