@@ -45,7 +45,7 @@ def write_to_csv(data_list, folder_path):
         writer.writerows(data_list)
 
 def main():
-    folder_path = './_decay0'
+    folder_path = './_decay5'
 
     data_list = process_files(folder_path)
     if data_list:
