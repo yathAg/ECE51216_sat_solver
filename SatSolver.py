@@ -68,7 +68,7 @@ def VSIDS_conflict(counter,conflictClause):
 # decay : Counter is reduced by 5% for all literals at each conflict
 def VSIDS_decay(counter,num_var):
     for i in range(-num_var,num_var+1):
-        counter[i]=counter[i]*100/100
+        counter[i]=counter[i]*95/100
     return counter
 
 
@@ -133,7 +133,6 @@ def CDCL_solve(clauses,num_var):
     while not all_vars_assigned(num_var , len(M)) :             # While variables remain to assign
         variable = VSIDS_decide(counter,M,num_var)                      # Decide : Pick a variable
         Decide_count += 1
-        # progressBar(len(M),num_var)                             # print progress    
         assign(variable,M,decide_pos)
         conflict,literal_watch = two_watch_propogate(clauses,literal_watch,clauses_literal_watched,M,variable)         # Deduce by Unit Propogation
         
@@ -304,14 +303,6 @@ def Backjump(M, dec_level, decide_pos,Imp_count):         #BackJump to decision 
     literal = M[dec_level]
     del M[dec_level:]
     return 0,-literal,Imp_count
-
-
-def progressBar(current, total, barLength = 20) :        # Print progress bar. Just to givee feel of work being done
-    percent = float(current) * 100 / total
-    arrow   = '-' * int(percent/100 * barLength - 1) + '>'
-    spaces  = ' ' * (barLength - len(arrow))
-    print('Progress (num_var:may backtrack): [%s%s] %d ' % (arrow, spaces, current), end='\r')
-
 
 def MAIN():
 
