@@ -17,4 +17,16 @@ Team Members
 | _results         | Contains the all the evaluation results and script to compile results into a .csv|
 | format_checker.cpp | A script to check if the output file is in the correct format for submission.                                |
 | run.sh             | Evaluates all the benchmarks and stores the result in their respective directory. Can automatically time out if the file takes too long to execute. |
-| SatSolver.py       | DPLL SAT solver with CDCL and VSIDS implementation.                                                          |
+| mySAT.py       | DPLL SAT solver with CDCL and VSIDS implementation.                                                          |
+
+## Executing The Satisfiability Sovler
+
+```
+python3 mySAT.py <filename>.cnf
+```
+
+Example
+
+```
+python3 mySAT.py ./_benchmarks/uuf75-01.cnf
+```
