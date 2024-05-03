@@ -1,0 +1,15 @@
+Successfully read the file
+Vars : 200 Clauses : 400
+Read time :0.0009245930000000013 sec
+ Solving ...
+
+Statistics :
+=============================================
+# Restarts : 11
+# Learned Clauses : 11587
+# Decisions : 11586
+# Implications : 202983
+# Solve time : 8.603514001 sec
+=============================================
+RESULT: UNSAT
+
