@@ -68,7 +68,7 @@ def VSIDS_conflict(counter,conflictClause):
 # decay : Counter is reduced by 5% for all literals at each conflict
 def VSIDS_decay(counter,num_var):
     for i in range(-num_var,num_var+1):
-        counter[i]=counter[i]*95/100
+        counter[i]=counter[i]*90/100
     return counter
 
 
@@ -151,7 +151,7 @@ def CDCL_solve(clauses,num_var):
                 return -1,Restart_count,Learned_count,Decide_count,Imp_count
             M.append(var)                                             # Append negation of last literal after backjump
             
-            # probability,Restart_count = RandomRestart(M,back,decide_pos,probability,Restart_count)        #Random Restart
+            probability,Restart_count = RandomRestart(M,back,decide_pos,probability,Restart_count)        #Random Restart
             conflict,literal_watch = two_watch_propogate(clauses,literal_watch,clauses_literal_watched,M,var)
 
             
