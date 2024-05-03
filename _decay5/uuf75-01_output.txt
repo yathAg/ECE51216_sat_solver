@@ -1,15 +1,15 @@
 Successfully read the file
 Vars : 75 Clauses : 325
-Read time :0.0008462870000000011 sec
+Read time :0.0008832819999999991 sec
  Solving ...
 
 Statistics :
 =============================================
-# Restarts : 7
+# Restarts : 6
 # Learned Clauses : 210
 # Decisions : 209
 # Implications : 6310
-# Solve time : 0.041858464 sec
+# Solve time : 0.047207470999999994 sec
 =============================================
 RESULT: UNSAT
 

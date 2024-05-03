@@ -1,1 +1,15 @@
-RESULT: Skipped file
+Successfully read the file
+Vars : 150 Clauses : 645
+Read time :0.0011790110000000006 sec
+ Solving ...
+
+Statistics :
+=============================================
+# Restarts : 11
+# Learned Clauses : 24994
+# Decisions : 24993
+# Implications : 1421462
+# Solve time : 2145.61096009 sec
+=============================================
+RESULT: UNSAT
+

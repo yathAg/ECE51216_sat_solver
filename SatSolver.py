@@ -151,7 +151,7 @@ def CDCL_solve(clauses,num_var):
                 return -1,Restart_count,Learned_count,Decide_count,Imp_count
             M.append(var)                                             # Append negation of last literal after backjump
             
-            probability,Restart_count = RandomRestart(M,back,decide_pos,probability,Restart_count)        #Random Restart
+            # probability,Restart_count = RandomRestart(M,back,decide_pos,probability,Restart_count)        #Random Restart
             conflict,literal_watch = two_watch_propogate(clauses,literal_watch,clauses_literal_watched,M,var)
 
             

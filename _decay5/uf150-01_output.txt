@@ -1,6 +1,6 @@
 Successfully read the file
 Vars : 150 Clauses : 645
-Read time :0.0013084080000000005 sec
+Read time :0.0011763009999999994 sec
  Solving ...
 
 Statistics :
@@ -9,7 +9,7 @@ Statistics :
 # Learned Clauses : 4978
 # Decisions : 5006
 # Implications : 286218
-# Solve time : 1.951525667 sec
+# Solve time : 1.729433508 sec
 =============================================
 RESULT: SAT
 ASSIGNMENT:
